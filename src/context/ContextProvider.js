@@ -4,6 +4,7 @@ import StarWarsContext from './StarWarsContext';
 
 function ContextProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filterByname, setFilterName] = useState({ name: '' });
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,7 +15,14 @@ function ContextProvider({ children }) {
       });
   }, []);
 
-  const contextValue = { planets };
+  useEffect(() => {
+    const filter = planets.filter((planet) => (
+      planet.name.includes(filterByname.name)
+    ));
+    setPlanets(filter);
+  }, [filterByname]);
+
+  const contextValue = { planets, setFilterName };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
