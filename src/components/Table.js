@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
-  // console.log(data);
+  const { data } = useContext(StarWarsContext);
   return (
     <section>
       <table>
@@ -25,29 +24,30 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets.map((planet) => (
-            <tr key={ planet.name }>
-              <td>{ planet.name }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.climate }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.population }</td>
-              <td>
-                <select>
-                  { planet.films.map((film) => (
-                    <option key={ film }>{ film }</option>
-                  )) }
-                </select>
-              </td>
-              <td>{ planet.created }</td>
-              <td>{ planet.edited }</td>
-              <td>{ planet.url }</td>
-            </tr>
-          ))}
+          { data && data.length > 0
+            && data.map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.climate }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.population }</td>
+                <td>
+                  <select>
+                    { planet.films.map((film) => (
+                      <option key={ film }>{ film }</option>
+                    )) }
+                  </select>
+                </td>
+                <td>{ planet.created }</td>
+                <td>{ planet.edited }</td>
+                <td>{ planet.url }</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </section>
