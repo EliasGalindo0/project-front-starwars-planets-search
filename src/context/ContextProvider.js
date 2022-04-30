@@ -14,7 +14,7 @@ function ContextProvider({ children }) {
       planet.name.includes(filterByname.name)
     ));
     setData(filter);
-  }, [filterByname, planets]);
+  }, [filterByname]);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -42,7 +42,7 @@ function ContextProvider({ children }) {
         setData(filtro);
       });
     }
-  }, [filterByNumericValues, data, planets]);
+  }, [filterByNumericValues]);
 
   const contextValue = {
     data,
