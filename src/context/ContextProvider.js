@@ -6,6 +6,7 @@ function ContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [filterByname, setFilterName] = useState({ name: '' });
+  const [filterByNumericValues, setfilterByNumericValues] = useState([]);
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ function ContextProvider({ children }) {
       planet.name.includes(filterByname.name)
     ));
     setData(filter);
-  }, [filterByname]);
+  }, [filterByname, planets]);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -24,7 +25,31 @@ function ContextProvider({ children }) {
       });
   }, []);
 
-  const contextValue = { data, planets, setFilterName };
+  useEffect(() => {
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach((actualFilter, index) => {
+        const { column, comparison, value } = actualFilter;
+        const array = index === 0 ? planets : data;
+        const filtro = array.filter((planet) => {
+          if (comparison === 'menor que') {
+            return Number(planet[column]) < Number(value);
+          }
+          if (comparison === 'maior que') {
+            return Number(planet[column]) > Number(value);
+          }
+          return Number(planet[column]) === Number(value);
+        });
+        setData(filtro);
+      });
+    }
+  }, [filterByNumericValues, data, planets]);
+
+  const contextValue = {
+    data,
+    planets,
+    setFilterName,
+    filterByNumericValues,
+    setfilterByNumericValues };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
