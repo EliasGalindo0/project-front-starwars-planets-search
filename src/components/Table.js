@@ -17,35 +17,25 @@ function Table() {
             <th>Terrain</th>
             <th>Surface Water</th>
             <th>Population</th>
-            <th>Films</th>
             <th>Created</th>
-            <th>Edited</th>
-            <th>URL</th>
+            <th>Updated</th>
           </tr>
         </thead>
         <tbody>
           { data && data.length > 0
-            && data.map((planet) => (
-              <tr key={ planet.name }>
+            && data.map((planet, index) => (
+              <tr key={ index }>
                 <td>{ planet.name }</td>
-                <td>{ planet.rotation_period }</td>
-                <td>{ planet.orbital_period }</td>
+                <td>{ planet.rotationPeriod }</td>
+                <td>{ planet.orbitalPeriod }</td>
                 <td>{ planet.diameter }</td>
                 <td>{ planet.climate }</td>
                 <td>{ planet.gravity }</td>
                 <td>{ planet.terrain }</td>
-                <td>{ planet.surface_water }</td>
+                <td>{ planet.surfaceWater }</td>
                 <td>{ planet.population }</td>
-                <td>
-                  <select>
-                    { planet.films.map((film) => (
-                      <option key={ film }>{ film }</option>
-                    )) }
-                  </select>
-                </td>
-                <td>{ planet.created }</td>
-                <td>{ planet.edited }</td>
-                <td>{ planet.url }</td>
+                <td>{ planet.createdAt }</td>
+                <td>{ planet.updatedAt }</td>
               </tr>
             ))}
         </tbody>

@@ -26,7 +26,7 @@ function Filters() {
       });
       setAllow(newAllowed);
     }
-  }, [filterByNumericValues]);
+  }, [filterByNumericValues, allowedFilters]);
 
   function handleFilter(key, value) {
     setFilter({
