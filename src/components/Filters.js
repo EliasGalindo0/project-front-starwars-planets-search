@@ -23,7 +23,7 @@ function Filters() {
         planet.name.toLowerCase().includes(filterName) || planet.name.includes(filterName)
       ));
     setData(results);
-  }, []);
+  }, [filterName, setData]);
 
   const filterByName = (event) => {;
   setFilterName(event.target.value);
