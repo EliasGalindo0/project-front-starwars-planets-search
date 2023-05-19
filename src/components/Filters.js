@@ -2,7 +2,7 @@ import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const {data, setData, planets} = React.useContext(StarWarsContext);
+  const {setData, planets, data} = React.useContext(StarWarsContext);
   const [filterName, setFilterName] = React.useState([]);
   const [filterByNumericValues, setfilterByNumericValues] = React.useState([]);
   const [filter, setFilter] = React.useState({
@@ -18,37 +18,26 @@ function Filters() {
     'surfaceWater',
   ]);
 
+React.useEffect(() => {
+    const results = planets.filter((planet) => (
+      planet.name.toUpperCase().includes(filterName) || planet.name.toLowerCase().includes(filterName)));
+      setData(results);
+}, [filterName, planets, setData]);
+
+  
+React.useEffect(() => {
+  if (filterByNumericValues.length > 0) {
+    let newAllowed;
+    filterByNumericValues.forEach((value) => {
+      newAllowed = allowedFilters.filter((allow) => (
+        value.column !== allow
+        ));
+      });
+      setAllow(newAllowed);
+    }
+  }, [allowedFilters, filterByNumericValues]);
+  
   React.useEffect(() => {
-      const results = data.filter((planet) => (
-        planet.name.toLowerCase().includes(filterName) || planet.name.includes(filterName)
-      ));
-    setData(results);
-  }, [filterName, setData]);
-
-  const filterByName = (event) => {;
-  setFilterName(event.target.value);
-  };
-
-  // React.useEffect(() => {
-  //   if (filterByNumericValues.length > 0) {
-  //     let newAllowed;
-  //     filterByNumericValues.forEach((value) => {
-  //       newAllowed = allowedFilters.filter((allow) => (
-  //         value.column !== allow
-  //       ));
-  //     });
-  //     setAllow(newAllowed);
-  //   }
-  // }, [filterByNumericValues, allowedFilters]);
-
-  const handleFilter = (column, value) => {
-    setFilter({
-      ...filter,
-      [column]: value,
-    });
-  }
-
-  const filterByValues = () => {
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((actualFilter, index) => {
         const { column, comparison, value } = actualFilter;
@@ -65,6 +54,17 @@ function Filters() {
         setData(filtro);
       });
     }
+  }, [filterByNumericValues, data]);
+    
+  const filterByName = (event) => {;
+  setFilterName(event.target.value);
+  };
+
+  const handleFilter = (column, value) => {
+    setFilter({
+      ...filter,
+      [column]: value,
+    });
   }
 
   return (

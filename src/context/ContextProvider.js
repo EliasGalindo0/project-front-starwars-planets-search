@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 
 function ContextProvider({ children }) {
-  const [data, setData] = useState([]);
-  const [planets, setPlanets] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [data, setData] = React.useState([]);
+  const [planets, setPlanets] = React.useState([]);
 
-  useEffect(() => {
+  // const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
     const url = 'https://parseapi.back4app.com/classes/SWAPI_Planet?count=1&limit=10';
     const headers = {
       'X-Parse-Application-Id': 'tsdFx2c3X5N2StrarHgbrWM1d0OgsBSvupJrubvT',
@@ -21,25 +22,6 @@ function ContextProvider({ children }) {
         setData(result.results);
       });
   }, []);
-    
-  // useEffect(() => {
-  //   if (filterByNumericValues.length > 0) {
-  //     filterByNumericValues.forEach((actualFilter, index) => {
-  //       const { column, comparison, value } = actualFilter;
-  //       const array = index === 0 ? planets : data;
-  //       const filtro = array.filter((planet) => {
-  //         if (comparison === 'menor que') {
-  //           return Number(planet[column]) < Number(value);
-  //         }
-  //         if (comparison === 'maior que') {
-  //           return Number(planet[column]) > Number(value);
-  //         }
-  //         return Number(planet[column]) === Number(value);
-  //       });
-  //       setData(filtro);
-  //     });
-  //   }
-  // }, [filterByNumericValues, data, planets]);
 
   const contextValue = {
     data,
