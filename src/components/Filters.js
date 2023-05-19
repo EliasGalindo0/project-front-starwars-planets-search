@@ -1,43 +1,82 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { filterByNumericValues, setfilterByNumericValues } = useContext(StarWarsContext);
-  const [filter, setFilter] = useState({
+  const {data, setData, planets} = React.useContext(StarWarsContext);
+  const [filterName, setFilterName] = React.useState([]);
+  const [filterByNumericValues, setfilterByNumericValues] = React.useState([]);
+  const [filter, setFilter] = React.useState({
     column: 'population',
     comparison: 'maior que',
     value: 0,
   });
-  const [allowedFilters, setAllow] = useState([
+  const [allowedFilters, setAllow] = React.useState([
     'population',
-    'orbital_period',
+    'orbitalPeriod',
     'diameter',
-    'rotation_period',
-    'surface_water',
+    'rotationPeriod',
+    'surfaceWater',
   ]);
 
-  useEffect(() => {
-    if (filterByNumericValues.length > 0) {
-      let newAllowed;
-      filterByNumericValues.forEach((value) => {
-        newAllowed = allowedFilters.filter((allow) => (
-          value.column !== allow
-        ));
-      });
-      setAllow(newAllowed);
-    }
-  }, [filterByNumericValues, allowedFilters]);
+  React.useEffect(() => {
+      const results = data.filter((planet) => (
+        planet.name.toLowerCase().includes(filterName) || planet.name.includes(filterName)
+      ));
+    setData(results);
+  }, []);
 
-  function handleFilter(key, value) {
+  const filterByName = (event) => {;
+  setFilterName(event.target.value);
+  };
+
+  // React.useEffect(() => {
+  //   if (filterByNumericValues.length > 0) {
+  //     let newAllowed;
+  //     filterByNumericValues.forEach((value) => {
+  //       newAllowed = allowedFilters.filter((allow) => (
+  //         value.column !== allow
+  //       ));
+  //     });
+  //     setAllow(newAllowed);
+  //   }
+  // }, [filterByNumericValues, allowedFilters]);
+
+  const handleFilter = (column, value) => {
     setFilter({
       ...filter,
-      [key]: value,
+      [column]: value,
     });
   }
 
+  const filterByValues = () => {
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach((actualFilter, index) => {
+        const { column, comparison, value } = actualFilter;
+        const array = index === 0 ? planets : data;
+        const filtro = array.filter((planet) => {
+          if (comparison === 'menor que') {
+            return Number(planet[column]) < Number(value);
+          }
+          if (comparison === 'maior que') {
+            return Number(planet[column]) > Number(value);
+          }
+          return Number(planet[column]) === Number(value);
+        });
+        setData(filtro);
+      });
+    }
+  }
+
   return (
-    <div>
-      <div>
+    <section className='filters'>
+      <input
+        type="text"
+        name="filter-name"
+        placeholder='Search Planet...'
+        id="filter"
+        onChange={filterByName}
+        data-testid="name-filter"
+      />
         <label htmlFor="collum">
           <select
             name="collum"
@@ -54,8 +93,6 @@ function Filters() {
             }
           </select>
         </label>
-      </div>
-      <div>
         <label htmlFor="operator">
           <select
             name="operator"
@@ -64,21 +101,17 @@ function Filters() {
             value={ filter.comparison }
             onChange={ ({ target }) => handleFilter('comparison', target.value) }
           >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
+            <option value="maior que">Greater than</option>
+            <option value="maior que">Less than</option>
+            <option value="igual a">Equal to</option>
           </select>
         </label>
-      </div>
-      <div>
         <input
           type="number"
           data-testid="value-filter"
           value={ filter.value }
           onChange={ ({ target }) => handleFilter('value', target.value) }
         />
-      </div>
-      <div>
         <button
           type="button"
           data-testid="button-filter"
@@ -92,8 +125,7 @@ function Filters() {
         >
           Filtrar
         </button>
-      </div>
-    </div>
+    </section>
   );
 }
 
