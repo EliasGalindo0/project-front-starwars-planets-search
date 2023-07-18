@@ -4,9 +4,9 @@ Este projeto utiliza React para fazer uma requisição a uma API que contém inf
 ## Como utilizar
 * Clone este repositório em sua máquina local com o comando `git clone git@github.com:EliasGalindo0/project-front-starwars-planets-search.git`
 * Abra um terminal na pasta raiz do projeto
-* Execute o comando npm install para instalar as dependências
-* Execute o comando npm start para iniciar a aplicação
-* Abra o navegador em http://localhost:3000
+* Execute o comando `npm install` para instalar as dependências
+* Execute o comando `npm start` para iniciar a aplicação
+* Abra o navegador em [localhost:3000](http://localhost:3000)
 
 ## Funcionalidades
 - Listagem de todos os planetas disponíveis na API
