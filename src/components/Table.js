@@ -5,10 +5,10 @@ import Filters from './Filters';
 function Table() {
   const { data } = useContext(StarWarsContext);
   return (
-    <section className='table-sec'>
-      <img className='logo-sw' src='https://i.pinimg.com/originals/b6/af/5a/b6af5aeff0ee43a4253fc70c167bb6db.png' alt='star-wars-logo' />
+    <section className="table-sec">
+      <img className="logo-sw" src="https://i.pinimg.com/originals/b6/af/5a/b6af5aeff0ee43a4253fc70c167bb6db.png" alt="star-wars-logo" />
       <Filters />
-      <table className='table'>
+      <table className="table">
         <thead>
           <tr>
             <th>Name</th>
@@ -24,11 +24,11 @@ function Table() {
             <th>Updated</th>
           </tr>
         </thead>
-        <tbody className='tbody'>
+        <tbody className="tbody">
           { data && data.length > 0
             && data.map((planet) => (
               <tr key={ planet.name }>
-                <td id={planet.name}>{ planet.name }</td>
+                <td id={ planet.name }>{ planet.name }</td>
                 <td>{ planet.rotationPeriod }</td>
                 <td>{ planet.orbitalPeriod }</td>
                 <td>{ planet.diameter }</td>

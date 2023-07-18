@@ -6,7 +6,7 @@ import ContextProvider from './context/ContextProvider';
 function App() {
   return (
     <ContextProvider>
-      <div className='body'>
+      <div className="body">
         <React.StrictMode>
           <Table />
         </React.StrictMode>
